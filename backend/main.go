@@ -1,18 +1,23 @@
 package main
 
 import (
-	"net/http"
-	"bytes"
+	"os"
+	"fmt"
 )
 
-var _ = bytes.Buffer{}
-
 func main() {
-	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-		rw.Write([]byte("hello"))
-	})
-
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		panic(err)
+	var x int
+	x += 1
+	if x < -1 {
+		println("not reach")
 	}
+
+
+
+
+	fmt.Fprintln(os.Stdout, "hello, world!", x)
+
+	f, _ := os.Open("file")
+	buf := []byte{}
+	f.Read(buf)
 }
