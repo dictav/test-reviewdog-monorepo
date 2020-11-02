@@ -21,8 +21,9 @@ jobs:
   reviewdog:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
       - id: diff
         run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
