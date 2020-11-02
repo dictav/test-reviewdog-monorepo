@@ -30,6 +30,5 @@ jobs:
         name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
-          workdir: backend
           reporter: github-pr-review
           level: info
