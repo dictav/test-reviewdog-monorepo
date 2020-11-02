@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: diff
-        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} . | xargs -I{} echo "::set-output name=diff::{}"
+        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
         name: Install modules
         run: npm install
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - id: diff
-        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} . | xargs -I{} echo "::set-output name=diff::{}"
+        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
         name: eslint
         uses: reviewdog/action-eslint@v1
