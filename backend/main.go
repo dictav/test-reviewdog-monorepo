@@ -5,9 +5,9 @@ import (
 	"bytes"
 )
 
-func main() {
-	b := bytes.Buffer{}
+var _ = bytes.Buffer{}
 
+func main() {
 	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		rw.Write([]byte("hello"))
 	})
