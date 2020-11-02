@@ -1,27 +1,30 @@
 name: frontend
 on: [pull_request]
+defaults:
+  run:
+    working-directory: frontend
 jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - id: diff
-      run: git diff --shortstat frontend | xargs -I{} echo "::set-output name=diff::{}"
-    - if: steps.diff.outputs.diff != ''
-      name: Install modules
-      run: npm install
-    - if: steps.diff.outputs.diff != ''
-      name: Run ESLint
-      run: eslint .
+      - uses: actions/checkout@v2
+      - id: diff
+        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} . | xargs -I{} echo "::set-output name=diff::{}"
+      - if: steps.diff.outputs.diff != ''
+        name: Install modules
+        run: npm install
+      - if: steps.diff.outputs.diff != ''
+        name: Run ESLint
+        run: eslint .
   reviewdog:
     name: runner / eslint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - id: diff
-      run: git diff --shortstat frontend | xargs -I{} echo "::set-output name=diff::{}"
-    - if: steps.diff.outputs.diff != ''
-      name: eslint
-      uses: reviewdog/action-eslint@v1
-      with:
-        reporter: github-pr-review # Change reporter.
+      - uses: actions/checkout@v1
+      - id: diff
+        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} . | xargs -I{} echo "::set-output name=diff::{}"
+      - if: steps.diff.outputs.diff != ''
+        name: eslint
+        uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-pr-review # Change reporter.
