@@ -1,5 +1,8 @@
 name: backend
 on: [pull_request]
+defaults:
+  run:
+    working-directory: backend
 jobs:
   golangci-lint:
     name: golangci-lint
@@ -7,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: diff
-        run: git diff --shortstat backend | xargs -I{} echo "::set-output name=diff::{}"
+        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
         name: golangci-lint
         uses: golangci/golangci-lint-action@v2
@@ -20,7 +23,7 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
       - id: diff
-        run: git diff --shortstat backend | xargs -I{} echo "::set-output name=diff::{}"
+        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
         name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
