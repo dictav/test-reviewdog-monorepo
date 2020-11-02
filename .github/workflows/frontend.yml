@@ -39,3 +39,5 @@ jobs:
         with:
           workdir: frontend
           reporter: github-pr-review # Change reporter.
+          filter_mode: nofilter
+          level: info
