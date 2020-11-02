@@ -3,6 +3,7 @@ on: [pull_request]
 defaults:
   run:
     working-directory: frontend
+    workdir: backend
 jobs:
   eslint:
     runs-on: ubuntu-latest
@@ -31,4 +32,5 @@ jobs:
         name: eslint
         uses: reviewdog/action-eslint@v1
         with:
+          workdir: backend
           reporter: github-pr-review # Change reporter.
