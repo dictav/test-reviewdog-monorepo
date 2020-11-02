@@ -4,20 +4,6 @@ defaults:
   run:
     working-directory: frontend
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - id: diff
-        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
-      - if: steps.diff.outputs.diff != ''
-        name: Install modules
-        run: npm install
-      - if: steps.diff.outputs.diff != ''
-        name: Run ESLint
-        run: eslint .
   reviewdog:
     runs-on: ubuntu-latest
     steps:
@@ -27,8 +13,14 @@ jobs:
       - id: diff
         run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
-        name: eslint
+        name: check 
         uses: reviewdog/action-eslint@v1
         with:
-          workdir: backend
-          reporter: github-pr-review # Change reporter.
+          workdir: frontend
+          reporter: github-check
+      - if: steps.diff.outputs.diff != ''
+        name: review
+        uses: reviewdog/action-eslint@v1
+        with:
+          workdir: frontend
+          reporter: github-pr-review

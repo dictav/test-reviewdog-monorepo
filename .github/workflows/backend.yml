@@ -4,19 +4,6 @@ defaults:
   run:
     working-directory: backend
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - id: diff
-        run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
-      - if: steps.diff.outputs.diff != ''
-        name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: v1.32.1
   reviewdog:
     runs-on: ubuntu-latest
     steps:
@@ -26,11 +13,16 @@ jobs:
       - id: diff
         run: git diff --shortstat origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- . | xargs -I{} echo "::set-output name=diff::{}"
       - if: steps.diff.outputs.diff != ''
-        name: golangci-lint
+        name: check
+        uses: reviewdog/action-golangci-lint@v1
+        with:
+          workdir: backend
+          reporter: github-check
+          level: info
+      - if: steps.diff.outputs.diff != ''
+        name: review
         uses: reviewdog/action-golangci-lint@v1
         with:
           workdir: backend
           reporter: github-pr-review
-          filter_mode: nofilter
-          fail_on_error: true
           level: info
