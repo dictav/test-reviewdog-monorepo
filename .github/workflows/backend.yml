@@ -3,10 +3,8 @@ on: [pull_request]
 defaults:
   run:
     working-directory: backend
-    workdir: backend
 jobs:
-  golangci-lint:
-    name: golangci-lint
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,5 +29,6 @@ jobs:
         name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
+          workdir: backend
           reporter: github-pr-review
           level: info

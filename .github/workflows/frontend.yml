@@ -3,9 +3,8 @@ on: [pull_request]
 defaults:
   run:
     working-directory: frontend
-    workdir: backend
 jobs:
-  eslint:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,7 +19,6 @@ jobs:
         name: Run ESLint
         run: eslint .
   reviewdog:
-    name: runner / eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
