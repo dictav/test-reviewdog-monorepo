@@ -29,6 +29,7 @@ jobs:
         name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
-          golangci_lint_flags: "--enable-all --exclude-use-default=false"
+          workdir: backend
           reporter: github-pr-review
+          golangci_lint_flags: "--enable-all --exclude-use-default=false"
           level: info
