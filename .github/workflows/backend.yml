@@ -32,4 +32,5 @@ jobs:
           workdir: backend
           reporter: github-pr-review
           filter_mode: nofilter
+          fail_on_error: true
           level: info
