@@ -31,4 +31,5 @@ jobs:
         with:
           workdir: backend
           reporter: github-pr-review
+          filter_mode: nofilter
           level: info
