@@ -31,5 +31,4 @@ jobs:
         with:
           workdir: backend
           reporter: github-pr-review
-          golangci_lint_flags: "--enable-all --exclude-use-default=false"
           level: info
