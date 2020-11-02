@@ -19,7 +19,6 @@ jobs:
         with:
           version: v1.32.1
   reviewdog:
-    name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
@@ -30,5 +29,6 @@ jobs:
         name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
+          workdir: backend
           reporter: github-pr-review
           level: info
