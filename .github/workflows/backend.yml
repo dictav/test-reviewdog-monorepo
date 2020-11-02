@@ -3,6 +3,7 @@ on: [pull_request]
 defaults:
   run:
     working-directory: backend
+    workdir: backend
 jobs:
   golangci-lint:
     name: golangci-lint
