@@ -18,9 +18,11 @@ jobs:
         with:
           workdir: frontend
           reporter: github-check
+          filter_mode: nofilter
       - if: steps.diff.outputs.diff != ''
         name: review
         uses: reviewdog/action-eslint@v1
         with:
           workdir: frontend
           reporter: github-pr-review
+          filter_mode: nofilter

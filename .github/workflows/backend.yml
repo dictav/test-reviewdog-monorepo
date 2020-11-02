@@ -18,6 +18,7 @@ jobs:
         with:
           workdir: backend
           reporter: github-check
+          filter_mode: nofilter
           level: info
       - if: steps.diff.outputs.diff != ''
         name: review
@@ -25,4 +26,5 @@ jobs:
         with:
           workdir: backend
           reporter: github-pr-review
+          filter_mode: nofilter
           level: info
