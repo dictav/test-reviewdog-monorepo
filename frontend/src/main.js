@@ -5,3 +5,5 @@ export function hello() {
   var greeting = new Greeting()
   elm.innerHTML = greeting.hello()
 }
+
+console.log('test');
